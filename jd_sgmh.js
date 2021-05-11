@@ -43,13 +43,7 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
@@ -262,7 +256,7 @@ function interact_template_getLotteryResult(taskId,timeout = 0) {
 function showMsg() {
   message += `任务已完成，本次运行获得京豆${$.beans}`
   return new Promise(resolve => {
-    if ($.beans) $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
+    if ($.beans) // $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     $.log(`【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
   })

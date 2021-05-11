@@ -65,6 +65,7 @@ if ($.isNode()) {
       }
       try {
         await jdMh('https://anmp.jd.com/babelDiy/Zeus/2x3yeXUmPbFVCAoXKQqSrdrQuoBk/index.html')
+        await jdMh('https://anmp.jd.com/babelDiy/Zeus/36ci7L5uDdhTjqNSNdNiFRbMzAVn/index.html')
       } catch (e) {
         $.logErr(e)
       }
@@ -97,7 +98,7 @@ async function jdMh(url) {
 function showMsg() {
   return new Promise(resolve => {
     message += `本次运行获得${$.beans}京豆`
-    $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
+    // $.msg($.name, '', `京东账号${$.index}${$.nickName}\n${message}`);
     resolve()
   })
 }

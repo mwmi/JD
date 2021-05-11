@@ -45,13 +45,7 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !function (n) {
   "use strict";
@@ -643,7 +637,7 @@ function getSpecialJoy() {
                   message += `暂无`;
                 }
                 if (data['data'].length >= 5) {
-                  $.msg($.name, '', `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`)
+                  // $.msg($.name, '', `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`)
                   if ($.isNode()) await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `京东账号 ${$.index}${$.nickName}\n恭喜你,已集成五福汪可合成分红JOY了`);
                 }
               }
@@ -685,7 +679,7 @@ function obtainAward(eventRecordId) {
 function showMsg() {
   return new Promise(async resolve => {
     message += `\n当前信息：${$.bean}京豆，${$.coin}金币`
-    $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`)
+    // $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`)
     resolve()
   })
 }
